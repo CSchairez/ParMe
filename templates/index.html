@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>ParMe</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>ParMe</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Score</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        {% for round in rounds %}
+            <tr>
+                <td>{{ round.golfer_name }}</td>
+                <td>{{ round.course_name }}</td>
+                <td>{{ round.round_score }}</td>
+                <td>{{ round.date_created.date()}}</td>
+                <td>
+                    <!-- Only Admin account should be able to delete posts, will rework this later -->
+                    <a href="/delete/{{round.id}}">Delete</a>
+                
+                </td>
+            </tr>
+            {% if round.round_comments %}
+                <td>{{ round.round_comments }}</td>
+            {% endif %}
+        {% endfor %}
+        
+    </table>
+    <table>
+        <input type="text" name="comment" id="comment">
+        <input type="submit" value="Add Comment">
+    </table>
+    
+    
+    <form action="/" method="POST">
+        <label for="name"><b>Name:</b></label>
+        <input type="text" name="name" id="name">
+
+        <label for="course"><b>Course:</b></label>
+        <input type="text" name="course" id="course">
+
+        <label for="score"><b>Score:</b></label>
+        <input type="text" name="score" id="score">
+
+        <input type="submit" value="Add Round">
+    </form>
+</div>
+{% endblock %}
