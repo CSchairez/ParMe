@@ -1,12 +1,16 @@
 from flask import Flask, render_template, url_for, request, redirect
+from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 
 app = Flask(__name__)
+api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 db = SQLAlchemy(app)
+
+
 
 
 class Todo(db.Model):
@@ -21,6 +25,32 @@ class Todo(db.Model):
 
     def __repr__(self):
         return '<Round %r>' % self.id
+
+
+
+class Round(Resource):
+    def post(self):
+
+        #-- Hardcoding round data for testing --#
+        golfer_name = "Mike"
+        course = "SJ Muni"
+        score = 92
+        new_golfer = Todo(golfer_name=golfer_name, course_name=course, round_score=score)
+
+        round = {"golfer_name":golfer_name, "course": course, "score": str(score)}
+        try:
+            #-- Add golfer to the db. --#
+            db.session.add(new_golfer)
+            db.session.commit()
+        except:
+            return 'There was an issue adding your round.'
+
+        rounds = Todo.query.order_by(Todo.date_created).all()
+        return {"Rounds": round}
+
+api.add_resource(Round, "/")
+
+"""
 
 @app.route('/', methods=['POST','GET'])
 def index():
@@ -64,7 +94,7 @@ def comment(id):
     round_to_comment = Todo.query.get_or_404(id)
 
 
-
+"""
 if __name__ == "__main__":
     app.run(debug=True)
     
