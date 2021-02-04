@@ -8,5 +8,6 @@
 <br>
 ![flask](./readme_statics/flask_logo.png)
 <br>
+INSERT MYSQL LOGO
 ![sql](./readme_statics/tailwind_logo.svg)
 <br>
