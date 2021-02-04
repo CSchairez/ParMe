@@ -8,6 +8,6 @@
 <br>
 ![flask](./readme_statics/flask_logo.png)
 <br>
-
+TEST
 ![sql](./readme_statics/tailwind_logo.svg)
 <br>
