@@ -3,7 +3,6 @@ import bcrypt
 import re
 
 app = Flask(__name__)
-#bcrypt = bcrypt(app) # hashing
 
 @app.route('/')
 def hello():
