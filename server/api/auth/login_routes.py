@@ -1,16 +1,10 @@
-from flask import Flask, request, redirect, url_for, session, jsonify
+from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
 import bcrypt
-import re
 
-app = Flask(__name__)
+auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 
-@app.route('/')
-def hello():
-    return {"msg": "hello"}
-
-@app.route('/api/auth/login', methods=['POST'])
+@auth.route('/login', methods=['POST'])    # prefixed with /api/auth
 def login():
-    
     # Get the data from the body of the request
     data = request.get_json()
 
