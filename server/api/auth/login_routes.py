@@ -9,7 +9,7 @@ def login():
     data = request.get_json()
 
     # pull out the username and the email
-    user_name = request.json.get("username", None)
+    user_email = request.json.get("email", None)
     user_pass = request.json.get("password", None)
 
     # hash the entered password with bcrypt
@@ -17,7 +17,7 @@ def login():
     
     # create a new dictionary of the username and the hashed password
     user_data = {
-        "username": user_name,
+        "email": user_email,
         "password": pass_hash,
     }
 
