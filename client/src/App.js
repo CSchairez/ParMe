@@ -1,17 +1,42 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+// Component imports
+import Navbar from './components/Navbar';
+import Home from './components/screens/Home';
+import About from './components/screens/About';
+import Feed from './components/screens/Feed';
+import Login from './components/screens/Login';
+import Register from './components/screens/Register';
 
 const App = () => {
   return (
-    // Test out the cool functionality of tailwind - THIS IS NOT AN ACTUAL BLOCK OF CODE IN OUR APP
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-      <div className="flex-shrink-0">
-        <img className="h-12 w-12" src="/img/logo.svg" alt="ChitChat Logo" />
-      </div>
-      <div>
-        <div className="text-xl font-medium text-black">ChitChat</div>
-        <p className="text-gray-500">You have a new message!</p>
-      </div>
-    </div>
+    <>
+      <Router>
+        <Navbar />
+        <div>
+          {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/about">
+              <About />
+            </Route>
+            <Route exact path="/feed">
+              <Feed />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </>
   );
 };
 
