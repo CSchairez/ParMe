@@ -6,7 +6,7 @@ import sys
 import os
 
 # Blueprints
-from .api.auth.login_routes import auth
+from .api.auth.auth import auth
 
 def create_app():
     app = Flask(__name__)
