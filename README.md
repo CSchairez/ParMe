@@ -3,10 +3,11 @@
 ### The Tech Stack
 
 <hr>
+<img src="./readme_statics/react_logo.png" width="300" height="220" />
 
-![react](./readme_statics/react_logo.png)
-<br>
-![flask](./readme_statics/flask_logo.png)
-<br>
-![sql](./readme_statics/tailwind_logo.svg)
+<img src="./readme_statics/flask_logo.png" width="300" height="120" />
+
+<img src="./readme_statics/mysql_logo.png" width="300" height="220" />
+
+<img src="./readme_statics/tailwind_logo.svg" width="300" height="220" />
 <br>
