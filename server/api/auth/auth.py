@@ -1,4 +1,5 @@
 from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
+from .auth.api.server.models.user import User
 import bcrypt
 
 auth = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -42,12 +43,10 @@ def register():
     pass_hash = bcrypt.hashpw(user_pass.encode('utf-8'), bcrypt.gensalt())
 
     # Use the user model to create a new instance of a user and then put them in the DB
+    user = User(user_name, user_email, user_pass, admin=True)
 
-    
-    # create a new dictionary of the username and the hashed password
-    user_data = {
-        "email": user_email,
-        "password": pass_hash,
-    }
+    # Add the user to the db and commit the changes
+    db.session.add(user)
+    db.session.commit()
 
-    return jsonify(user_data)
+    return jsonify({"user": user})
