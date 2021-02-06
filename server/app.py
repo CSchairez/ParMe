@@ -14,7 +14,7 @@ def create_app():
     app = Flask(__name__)
     
     # Register all blueprints (custom routing)
-    app.register_blueprint(auth)
+    app.register_blueprint(auth, url_prefix='/api/auth')
 
     # establish SQLAlchemy URI and db connection configs
     create_db(app)
@@ -23,6 +23,7 @@ def create_app():
     db = SQLAlchemy(app)
 
     return app
+
 
 def create_db(app):
     
@@ -46,3 +47,7 @@ def create_db(app):
 
     # Some feedback to ensure connection has been made
     print('Connected to MySQL database')
+
+app = create_app()
+
+app.run(debug=True)

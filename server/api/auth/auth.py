@@ -1,8 +1,8 @@
 from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
-from .auth.api.server.models.user import User
+from ...models import user
 import bcrypt
 
-auth = Blueprint('auth', __name__, url_prefix='/api/auth')
+auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['POST'])    # prefixed with /api/auth
 def login():
