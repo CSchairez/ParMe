@@ -4,9 +4,9 @@ import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask import Blueprint
 print("Running auth.py")
+
+
 auth = Blueprint('auth', __name__)
-
-
 # TESTING ROUTE
 @auth.route('/')
 def index():

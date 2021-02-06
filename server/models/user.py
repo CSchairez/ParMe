@@ -1,6 +1,5 @@
 import datetime
-from flask_sqlalchemy import SQLAlchemy
-
+from server.extensions import db
 
 class User(db.Model):
     
@@ -17,10 +16,3 @@ class User(db.Model):
         self.password = password
         self.registered_on = datetime.datetime.now()
         self.admin = admin
-
-    def __repr__(self):
-        return '<User %r>'
-
-if __name__=='__main__':
-    new_user = User("michael", "a.chairezmichael@gmail.com", "pass123",True)
-    
