@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
-from ....models.users import User
+from ...models.user import User
 import bcrypt
 
 auth = Blueprint('auth', __name__)

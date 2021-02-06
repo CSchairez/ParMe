@@ -6,7 +6,7 @@ import os
 import pymysql
 
 # Blueprints
-from .api.auth import auth
+from api.authRoutes.auth import auth
 
 def create_app():
     
