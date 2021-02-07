@@ -2,7 +2,8 @@ from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
 import datetime
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
-from flask import Blueprint
+from ..models.user import User
+from ..models.user import db
 
 auth = Blueprint('auth', __name__)
 
@@ -35,7 +36,7 @@ def login():
     # remove this return after the above algorithm is done
     #return jsonify(user_data)
 
-@auth.route('/register')
+@auth.route('/register', methods=['POST'])
 def register():
     # Get the data from the body of the request
     data = request.get_json()
@@ -45,7 +46,6 @@ def register():
     user_pass = request.json.get("password", None)
     user_name = request.json.get("name", None)
 
-    # new_user = User("Michael Chairez", "a.chairezmichael@gmail.com","pass123", True)
     # Do some validation later (joi for NodeJS. See equivalent for flask)
 
     # hash the entered password with bcrypt
@@ -55,7 +55,7 @@ def register():
     user = User(user_name, user_email, user_pass, admin=True)
 
     # Add the user to the db and commit the changes
-    db.session.add(new_user)
+    db.session.add(user)
     db.session.commit()
 
-    return jsonify({"user": new_user})
+    return jsonify({"user": user})
