@@ -6,8 +6,9 @@ from routes.auth import auth
 def create_app():
 
     app = Flask(__name__)
-    app.register_blueprint(auth)
-        # Attach the environment DB secrets to the app config
+    app.register_blueprint(auth, url_prefix="/api/auth")
+    
+    # Attach the environment DB secrets to the app config
     app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
     app.config['MYSQL_USER'] = os.getenv("MYSQL_USER")
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
@@ -33,6 +34,6 @@ def create_app():
 
 
 if __name__ == '__main__':
-    app,db = create_app()
+    app, db = create_app()
     app.run(debug=True)
 
