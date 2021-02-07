@@ -4,8 +4,10 @@ from routes.auth import auth
 from .extensions import db
 
 def create_app():
+
     app = Flask(__name__)
-    app.register_blueprint(auth)
+    
+    app.register_blueprint(auth, url_prefix="/api/auth")
 
     db.init_app(app)
 
