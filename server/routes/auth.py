@@ -3,6 +3,9 @@ import datetime
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask import Blueprint
+
+from extensions import db
+
 print("Running auth.py")
 
 
