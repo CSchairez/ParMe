@@ -1,6 +1,5 @@
 import os
 from flask import Flask
-# from extensions import db
 from server.routes.auth import auth
 from server.models.user import db
 from flask_sqlalchemy import SQLAlchemy
@@ -23,7 +22,9 @@ def create_app():
     dbName = app.config['MYSQL_DB']
 
     # SQLAlchemy connection URI
-    connectionURI = f'mysql+pymysql://{dbUser}:{dbPass}@{dbHost}/{dbName}'
+    connectionURI = f'mysql://{dbUser}:{dbPass}@{dbHost}/{dbName}'
+
+    print(connectionURI)
 
     # Saving the URI to the app config 
     app.config['SQLALCHEMY_DATABASE_URI'] = connectionURI
