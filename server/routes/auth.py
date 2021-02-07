@@ -46,7 +46,10 @@ def register():
     user_pass = request.json.get("password", None)
     user_name = request.json.get("name", None)
 
-    # Do some validation later (joi for NodeJS. See equivalent for flask)
+    # TODO
+    # Do some validation on the input
+    # Check if this user exists in the DB (check by the email)
+    # if they do, return a json message for error, else, if they do not, hash the password and insert them
 
     # hash the entered password with bcrypt
     pass_hash = bcrypt.hashpw(user_pass.encode('utf-8'), bcrypt.gensalt())
@@ -58,4 +61,4 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({"user": user})
+    return jsonify({"user": user_name + " added to DB"})
