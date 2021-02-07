@@ -1,31 +1,30 @@
 import os
-import pymysql
 from flask import Flask
+
+# Database init for global db obj + route imports for blueprints
 from server.routes.auth import auth
 from server.models.db_init import db
 from flask_sqlalchemy import SQLAlchemy
 
+from dotenv import load_dotenv
+
 def create_app():
 
+    # Load the .env data into a parsable dicctionary with os.getenv
+    load_dotenv(verbose=True)  
+
+    # initialize flask app
     app = Flask(__name__)
 
-    # Attach the environment DB secrets to the app config
+    # Attach the environment DB secrets to the app config + flask app configs
     app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
     app.config['MYSQL_USER'] = os.getenv("MYSQL_USER")
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
-
-    # Put in variables to make the connection string below cleaner
-    dbUser = os.getenv("MYSQL_USER")
-    dbHost = os.getenv("MYSQL_HOST")
-    dbPass = os.getenv("MYSQL_PASSWORD")
-    dbName = os.getenv("MYSQL_DB")
-
-    # SQLAlchemy connection URI - bugged if using the above vars
-    connectionURI = f'mysql://admin:1qaz!2wsx!qwe#2@database-1.cx8lvdttf77k.us-west-1.rds.amazonaws.com/parme'
-
+    app.config['RDS_MYSQL_URI'] = os.getenv("RDS_MYSQL_URI")
+    
     # Saving the URI to the app config + disabling DB changes for performance
-    app.config['SQLALCHEMY_DATABASE_URI'] = connectionURI
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("RDS_MYSQL_URI")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # register all routing blueprints
@@ -35,10 +34,13 @@ def create_app():
 
 
 if __name__ == '__main__':
+    
     app = create_app()
-
-    # Init DB with app and create all tables for our DB 
+    
+    # Init DB with our app
     db.init_app(app)
+
+    # create all tables from our models in the context of our app (which db is initialized with above)
     with app.app_context():
         db.create_all()
     app.run(debug=True)
