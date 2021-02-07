@@ -16,13 +16,13 @@ def create_app():
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
 
     # Put in variables to make the connection string below cleaner
-    dbUser = app.config['MYSQL_USER']
-    dbHost = app.config['MYSQL_HOST']
-    dbPass = app.config['MYSQL_PASSWORD']
-    dbName = app.config['MYSQL_DB']
+    dbUser = os.getenv("MYSQL_USER")
+    dbHost = os.getenv("MYSQL_HOST")
+    dbPass = os.getenv("MYSQL_PASSWORD")
+    dbName = os.getenv("MYSQL_DB")
 
-    # SQLAlchemy connection URI
-    connectionURI = f'mysql://{dbUser}:{dbPass}@{dbHost}/{dbName}'
+    # SQLAlchemy connection URI - bugged if using the above vars
+    connectionURI = f'mysql://admin:1qaz!2wsx!qwe#2@database-1.cx8lvdttf77k.us-west-1.rds.amazonaws.com/parme'
 
     print(connectionURI)
 
