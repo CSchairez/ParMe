@@ -7,7 +7,9 @@ import pymysql
 
 
 def create_app():
+
     app = Flask(__name__)
+<<<<<<< HEAD
     app.register_blueprint(auth)
         # Attach the environment DB secrets to the app config
     app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
@@ -23,6 +25,10 @@ def create_app():
 
     # SQLAlchemy connection URI
     connectionURI = f'mysql+pymysql://{dbUser}:{dbPass}@{dbHost}/{dbName}'
+=======
+    
+    app.register_blueprint(auth, url_prefix="/api/auth")
+>>>>>>> 336c4c66eb8264111883a07aa3eeedae91e5c101
 
     # Saving the URI to the app config 
     app.config['SQLALCHEMY_DATABASE_URI'] = connectionURI
