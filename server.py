@@ -34,10 +34,6 @@ def create_app():
     # register all routing blueprints
     app.register_blueprint(auth, url_prefix="/api/auth")
 
-    # Connect to AWD RDS instance
-    # db = pymysql.connect(host=dbHost, user=dbUser, password=dbPass, database=dbName)
-
-
     return app 
 
 
