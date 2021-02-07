@@ -1,7 +1,7 @@
+import os
 from flask import Flask
 from extensions import db
 from routes.auth import auth
-from extensions import db
 
 def create_app():
 
@@ -26,7 +26,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = connectionURI
 
     # Connect to AWD RDS instance
-    db = pymysql.connect(host='database-1.cx8lvdttf77k.us-west-1.rds.amazonaws.com', user='admin', password='1qaz!2wsx!qwe#2', database='parme')
+    db = pymysql.connect(host=dbHost, user=dbUser, password=dbPass, database=dbName)
 
 
     return app, db
