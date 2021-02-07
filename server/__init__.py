@@ -1,16 +1,19 @@
+import os
 from flask import Flask
 from extensions import db
 from routes.auth import auth
-import os
-import dotenv
-import pymysql
-
 
 def create_app():
 
     app = Flask(__name__)
+<<<<<<< HEAD
     app.register_blueprint(auth)
         # Attach the environment DB secrets to the app config
+=======
+    app.register_blueprint(auth, url_prefix="/api/auth")
+    
+    # Attach the environment DB secrets to the app config
+>>>>>>> 0afddd21f77d43dce96a9adeceeb9b93f30b324a
     app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
     app.config['MYSQL_USER'] = os.getenv("MYSQL_USER")
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
@@ -29,13 +32,13 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = connectionURI
 
     # Connect to AWD RDS instance
-    db = pymysql.connect(host='database-1.cx8lvdttf77k.us-west-1.rds.amazonaws.com', user='admin', password='1qaz!2wsx!qwe#2', database='parme')
+    db = pymysql.connect(host=dbHost, user=dbUser, password=dbPass, database=dbName)
 
 
     return app, db
 
 
 if __name__ == '__main__':
-    app,db = create_app()
+    app, db = create_app()
     app.run(debug=True)
 
