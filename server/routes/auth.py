@@ -2,8 +2,12 @@ from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
 import datetime
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
+
+# User model to create new user records for our user table
 from ..models.user import User
-from ..models.user import db
+
+# Our db object from SQLAlchemys
+from ..models.db_init import db
 
 auth = Blueprint('auth', __name__)
 
@@ -55,7 +59,7 @@ def register():
     pass_hash = bcrypt.hashpw(user_pass.encode('utf-8'), bcrypt.gensalt())
 
     # Use the user model to create a new instance of a user and then put them in the DB
-    user = User(user_name, user_email, user_pass, admin=True)
+    user = User(user_name, user_email, pass_hash)
 
     # Add the user to the db and commit the changes
     db.session.add(user)
