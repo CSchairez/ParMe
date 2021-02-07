@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from routes.auth import auth
-from .extensions import db
+from extensions import db
 
 def create_app():
 
