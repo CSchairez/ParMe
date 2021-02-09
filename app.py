@@ -16,7 +16,7 @@ def create_app():
     # initialize flask app
     app = Flask(__name__)
 
-    # Attach the environment DB secrets to the app config + flask app configs
+    # Configure the DB for this app
     app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
     app.config['MYSQL_USER'] = os.getenv("MYSQL_USER")
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
