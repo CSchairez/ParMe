@@ -3,18 +3,37 @@ import datetime
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
-# User model to create new user records for our user table
+# User model to create new user records for our user table, and round records for round table.
 from ..models.user import User
+from ..models.round import Round
 
 # Our db object from SQLAlchemys
 from ..models.db_init import db
 
 auth = Blueprint('auth', __name__)
 
-# TESTING ROUTE
-@auth.route('/')
+# Feed ROUTE
+@auth.route('/', methods=['POST'])
 def index():
-    return jsonify({"message" : "hello world"})
+    # Get the data from the body of the request
+    data = request.get_json()
+
+    # pull out the username and the email
+    
+
+    course = request.json.get("course", None)
+    score = request.json.get("score", None)
+    # Figure out how to query the golfer 
+
+
+    name = User.query.filter_by(name='Michael').first()
+    new_round = Round(course=course, score=score, golfer_id=name.id)
+    db.session.add(new_round)
+    db.session.commit()
+
+
+
+    return jsonify({"user" : "round added"})
 
 
 @auth.route('/login', methods=['POST'])    # prefixed with /api/auth
@@ -60,6 +79,7 @@ def register():
 
     # Use the user model to create a new instance of a user and then put them in the DB
     user = User(user_name, user_email, pass_hash)
+
 
     # Add the user to the db and commit the changes
     db.session.add(user)
