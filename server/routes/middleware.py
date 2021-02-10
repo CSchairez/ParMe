@@ -7,7 +7,7 @@ from server import app
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
+        token = request.headers.get('Authorization').split(' ')[1]
         if not token:
             return jsonify({'message':'Missing token'}), 403
         try:

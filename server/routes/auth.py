@@ -37,6 +37,7 @@ def index():
     name = request.json.get("name", None)
     course = request.json.get("course", None)
     score = request.json.get("score", None)
+    
     # Figure out how to query the golfer 
 
     # Query the user to their associated round.
@@ -99,7 +100,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        return jsonify({"user": f'{user_name' add successfully, access_token: null}), 200
+        return jsonify({"user": f'{user_name' add successfully}, access_token: null), 200
 
     # if the user already exists
     except IntegrityError:
