@@ -1,4 +1,8 @@
 from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
 import datetime
 import bcrypt
 import jwt
@@ -95,12 +99,15 @@ def register():
         user = User(user_name, user_email, pass_hash)
 
         # Create JWT with a payload of the users ID
+        access_token = create_access_token(identity={'id':user.user_id})
 
         # Add the user to the db and commit the changes
         db.session.add(user)
         db.session.commit()
 
-        return jsonify({"user": f'{user_name} add successfully', "access_token": null}), 200
+
+
+        return jsonify({"user": f'{user_name} add successfully', "access_token": access_token}), 200
 
     # if the user already exists
     except IntegrityError:
