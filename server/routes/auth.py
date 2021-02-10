@@ -1,18 +1,33 @@
 from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
 import datetime
 import bcrypt
+import jwt
 from flask_sqlalchemy import SQLAlchemy
 
 # User model to create new user records for our user table, and round records for round table.
-from ..models.user import User
-from ..models.round import Round
+# Import the schemas to output into serializable json
 
+from ..models.round import Round, RoundSchema
+from ..models.user import User, UserSchema
 # Our db object from SQLAlchemys
 from ..models.db_init import db
 
+
 auth = Blueprint('auth', __name__)
 
-# Feed ROUTE
+
+# Feed route will show all rounds that have been posted.
+# Do not need to be logged in to see feed.
+@auth.route('/feed')
+def feed():
+
+    rounds = Round.query.all()
+    round_schema = RoundSchema(many=True)
+    output = round_schema.dump(rounds)
+    return jsonify({'round': output})
+
+
+# 
 @auth.route('/', methods=['POST'])
 def index():
     # Get the data from the body of the request
@@ -20,14 +35,14 @@ def index():
 
     # pull out the username and the email
     
-
+    name = request.json.get("name", None)
     course = request.json.get("course", None)
     score = request.json.get("score", None)
     # Figure out how to query the golfer 
 
+    # Query the user to their associated round.
 
-    name = User.query.filter_by(name='Michael').first()
-    new_round = Round(course=course, score=score, golfer_id=name.id)
+    new_round = Round(course_name=course, score=score, user_id=1)
     db.session.add(new_round)
     db.session.commit()
 
@@ -80,9 +95,10 @@ def register():
     # Use the user model to create a new instance of a user and then put them in the DB
     user = User(user_name, user_email, pass_hash)
 
-
     # Add the user to the db and commit the changes
     db.session.add(user)
     db.session.commit()
+
+
 
     return jsonify({"user": user_name + " added to DB"})

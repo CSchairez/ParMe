@@ -4,7 +4,9 @@ from flask import Flask
 # Database init for global db obj + route imports for blueprints
 from server.routes.auth import auth
 from server.models.db_init import db
+from server.models.ma_init import ma
 from flask_sqlalchemy import SQLAlchemy
+
 
 from dotenv import load_dotenv
 
@@ -39,6 +41,7 @@ if __name__ == '__main__':
     
     # Init DB with our app
     db.init_app(app)
+    ma.init_app(app)
 
     # create all tables from our models in the context of our app (which db is initialized with above)
     with app.app_context():
