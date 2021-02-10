@@ -10,6 +10,7 @@ from sqlalchemy.exc import IntegrityError
 
 from ..models.round import Round, RoundSchema
 from ..models.user import User, UserSchema
+
 # Our db object from SQLAlchemys
 from ..models.db_init import db
 
@@ -86,24 +87,27 @@ def register():
         if not user_pass:
             return 'Missing password', 400
 
-        # TODO
-        # Check if this user exists in the DB (check by the email)
-        # if they do, return a json message for error, else, if they do not, hash the password and insert them
-
         # hash the entered password with bcrypt
         pass_hash = bcrypt.hashpw(user_pass.encode('utf-8'), bcrypt.gensalt())
 
         # Use the user model to create a new instance of a user and then put them in the DB
         user = User(user_name, user_email, pass_hash)
+
+        # Create JWT with a payload of the users ID
+
         # Add the user to the db and commit the changes
         db.session.add(user)
         db.session.commit()
 
-        return f'Welcome! {user_name}', 200
+        return jsonify({"user": f'{user_name' add successfully, access_token: null}), 200
+
+    # if the user already exists
     except IntegrityError:
         db.session.rollback()
         return 'User already exists', 400
+    
+    # if the user forgot / did not enter and email or password
     except AttributeError:
         return 'Provide an Email and Password in JSON format.', 400
 
-    return jsonify({"user": user_name + " added to DB"})
+
