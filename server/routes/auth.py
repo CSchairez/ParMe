@@ -100,7 +100,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        return jsonify({"user": f'{user_name' add successfully}, access_token: null), 200
+        return jsonify({"user": f'{user_name} add successfully', "access_token": null}), 200
 
     # if the user already exists
     except IntegrityError:
