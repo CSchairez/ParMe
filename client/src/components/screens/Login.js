@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onHandleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email, password);
+
+    // dispath the login action here
+  };
+
+  const onHandleChange = (e) => {
+    switch (e.target.name) {
+      case 'email':
+        setEmail(e.target.value);
+        break;
+      case 'password':
+        setPassword(e.target.value);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="login">
       <main class="bg-white max-w-lg mx-auto p-8 md:p-12 my-20 rounded-lg shadow-2xl">
@@ -10,7 +33,7 @@ const Login = () => {
         </section>
 
         <section class="mt-10">
-          <form class="flex flex-col">
+          <form class="flex flex-col" onSubmit={onHandleSubmit}>
             <div class="mb-6 pt-3 rounded">
               <label
                 class="block text-gray-700 text-sm font-bold mb-2 ml-3"
@@ -21,6 +44,9 @@ const Login = () => {
               <input
                 type="text"
                 id="email"
+                name="email"
+                value={email}
+                onChange={onHandleChange}
                 class="rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
               />
             </div>
@@ -34,6 +60,9 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
+                name="password"
+                value={password}
+                onChange={onHandleChange}
                 class="rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
               />
             </div>
@@ -48,6 +77,7 @@ const Login = () => {
             <button
               class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
               type="submit"
+              onSubmit={onHandleSubmit}
             >
               Sign In
             </button>
