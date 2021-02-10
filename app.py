@@ -24,7 +24,7 @@ def create_app():
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
     app.config['RDS_MYSQL_URI'] = os.getenv("RDS_MYSQL_URI")
-    
+    app.config['MY_SECRET_KEY'] = os.getenv("MY_SECRET_KEY")
     # Saving the URI to the app config + disabling DB changes for performance
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("RDS_MYSQL_URI")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
