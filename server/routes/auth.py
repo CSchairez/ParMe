@@ -95,10 +95,21 @@ def register():
     # Use the user model to create a new instance of a user and then put them in the DB
     user = User(user_name, user_email, pass_hash)
 
+<<<<<<< HEAD
+=======
+    user_id = user.id
+    token = jwt.token(user_id)
+
+
+>>>>>>> b5bdfbaf4be701f8fdefd63d5fc8598f1a54887a
     # Add the user to the db and commit the changes
     db.session.add(user)
     db.session.commit()
 
+<<<<<<< HEAD
 
 
     return jsonify({"user": user_name + " added to DB"})
+=======
+    return jsonify({"user": user_name + " added to DB", access_token: token})
+>>>>>>> b5bdfbaf4be701f8fdefd63d5fc8598f1a54887a
