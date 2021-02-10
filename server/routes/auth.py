@@ -88,9 +88,9 @@ def register():
 
         # If there is no email or password return 400 
         if not user_email:
-            return 'Missing email', 400
+            return jsonify({"message" : 'Missing email'}), 400
         if not user_pass:
-            return 'Missing password', 400
+            return jsonify({"message" : 'Missing password'}), 400
 
         # hash the entered password with bcrypt
         pass_hash = bcrypt.hashpw(user_pass.encode('utf-8'), bcrypt.gensalt())
@@ -98,24 +98,21 @@ def register():
         # Use the user model to create a new instance of a user and then put them in the DB
         user = User(user_name, user_email, pass_hash)
 
-        # Create JWT with a payload of the users ID
-        access_token = create_access_token(identity={'id':user.user_id})
+        # Create JWT with a payload of the users email
+        access_token = create_access_token(identity={'email':user_email})
 
         # Add the user to the db and commit the changes
         db.session.add(user)
         db.session.commit()
 
-
-
-        return jsonify({"user": f'{user_name} add successfully', "access_token": access_token}), 200
+        # return that the user was added fine and also the access token to be stored in Local Storage
+        return jsonify({"user": f'{user_name} added successfully', "access_token": access_token}), 200
 
     # if the user already exists
     except IntegrityError:
         db.session.rollback()
-        return 'User already exists', 400
+        return jsonify({"message" : 'User already exists'}), 400
     
     # if the user forgot / did not enter and email or password
     except AttributeError:
-        return 'Provide an Email and Password in JSON format.', 400
-
-
+        return jsonify({"message" : 'Provide an Email and Password'}), 400
