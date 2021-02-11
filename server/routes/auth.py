@@ -54,23 +54,37 @@ def index():
 
 @auth.route('/login', methods=['POST'])    # prefixed with /api/auth
 def login():
-    # Get the data from the body of the request
-    data = request.get_json()
+    try:
+        # Get the data from the body of the request
+        data = request.get_json()
 
-    # pull out the username and the email
-    user_email = request.json.get("email", None)
-    user_pass = request.json.get("password", None)
-    
-    
-    '''
-    Lookup the user in the database using a query ----
-        If the user exists, then we need to compare the entered password to the hashed password in the database
-            If the PW matches, we want to get the users ID and encode that in a JWT and send the jwt to the client
-            to be put in local storage (send it back as a json response like {user_id: the_jwt}). The JWT will be our form of
-            auth state being carried about across requests and qerying the DB by that user ID
-            Else, return a status code of 404 and a message saying the password was incorrect
-        Else, return a bad status and a message saying email does not exist
-    '''
+        # pull out the username and the email
+        user_email = request.json.get("email", None)
+        user_pass = request.json.get("password", None)
+
+        # If there is no email or password return 400 
+        if not user_email:
+            return jsonify({"message" : 'Missing email'}), 400
+        if not user_pass:
+            return jsonify({"message" : 'Missing password'}), 400
+
+        # else the email and password was entered. Let's query the DB and see if this user indeed EXISTS
+        user = User.query.filter_by(email=user_email).first()
+
+        # if we could not find a user with that email, return a user not found
+        if not user:
+            return jsonify({"message" : 'User not found'}), 400
+
+        # else, they were found so now compare the hashed saved password in the DB to the password the user entered
+        # if the password is correct, create a auth token and then send back that user logged in fine and the token, else, return some 400 res
+        if bcrypt.checkpw(user_pass.encode('utf-8'), user.password):
+            access_token = create_access_token(identity={'email':user_email})
+            return jsonify({"message": f'{user.user_name} logged in', "access_token": access_token}) 
+        else:
+            return jsonify({"message" : 'Invalid credentials'}), 400
+
+    except AttributeError:
+        return jsonify({"message": "Please enter an email and password"})
 
     # remove this return after the above algorithm is done
     #return jsonify(user_data)
