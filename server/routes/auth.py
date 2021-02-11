@@ -47,7 +47,7 @@ def login():
         # if the password is correct, create a auth token and then send back that user logged in fine and the token, else, return some 400 res
         if bcrypt.checkpw(user_pass.encode('utf-8'), user.password):
             access_token = create_access_token(identity={'email':user_email})
-            return jsonify({"msg": f'{user.user_name} logged in', "access_token": access_token}) 
+            return jsonify({"msg": f'{user.name} logged in', "access_token": access_token}) 
         else:
             return jsonify({"msg" : 'Invalid credentials'}), 400
 
