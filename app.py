@@ -7,6 +7,8 @@ from server.models.db_init import db
 from server.models.ma_init import ma
 from flask_sqlalchemy import SQLAlchemy
 
+from flask_jwt_extended import (create_access_token, get_jwt_identity, JWTManager, jwt_required, get_raw_jwt)
+
 
 from dotenv import load_dotenv
 
@@ -28,6 +30,13 @@ def create_app():
     # Saving the URI to the app config + disabling DB changes for performance
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("RDS_MYSQL_URI")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    app.config['JWT_SECRET_KEY'] = 'this-is-super-secret'
+    app.config['JWT_BLACKLIST_ENABLED'] = True
+    app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
+
+
+    jwt = JWTManager(app)
 
     # register all routing blueprints
     app.register_blueprint(auth, url_prefix="/api/auth")

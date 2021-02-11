@@ -100,7 +100,9 @@ def register():
         user_pass = request.json.get("password", None)
         user_name = request.json.get("name", None)
 
-        # If there is no email or password return 400 
+        # If there is no name/email/pw return 400
+        if not user_name:
+            return jsonify({'message':'Please enter your name'}), 400
         if not user_email:
             return jsonify({"message" : 'Missing email'}), 400
         if not user_pass:
