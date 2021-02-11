@@ -86,9 +86,6 @@ def login():
     except AttributeError:
         return jsonify({"message": "Please enter an email and password"})
 
-    # remove this return after the above algorithm is done
-    #return jsonify(user_data)
-
 @auth.route('/register', methods=['POST'])
 def register():
     try:
