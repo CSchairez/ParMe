@@ -24,15 +24,19 @@ auth = Blueprint('auth', __name__)
 
 # Feed route will show all rounds that have been posted.
 # Do not need to be logged in to see feed.
+
+# talking to my gf rn btw
+
 @auth.route('/feed', methods=['GET'])
 def feed():
 
     rounds = Round.query.all()
     round_schema = RoundSchema(many=True)
     output = round_schema.dump(rounds)
-    return jsonify({'round': output})
+    return jsonify({'round': output}),200
 
-@auth.route('/', methods=['POST'])
+
+@auth.route('/addRound', methods=['POST'])
 def index():
     # Get the data from the body of the request
     data = request.get_json()
@@ -42,7 +46,7 @@ def index():
     course = request.json.get("course", None)
     score = request.json.get("score", None)
     
-    # Figure out how to query the golfer 
+    # Figure out how to query the golfer
 
     # Query the user to their associated round.
     new_round = Round(course_name=course, score=score, user_id=1)

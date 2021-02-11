@@ -32,7 +32,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     app.config['JWT_SECRET_KEY'] = 'this-is-super-secret'
-    app.config['JWT_BLACKLIST_ENABLED'] = True
+    app.config['JWT_BLACKLIST_ENABLED'] = False
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
 
 
