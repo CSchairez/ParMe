@@ -23,9 +23,6 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['POST'])    # prefixed with /api/auth
 def login():
     try:
-        # Get the data from the body of the request
-        data = request.get_json()
-
         # pull out the username and the email
         user_email = request.json.get("email", None)
         user_pass = request.json.get("password", None)
@@ -57,9 +54,6 @@ def login():
 @auth.route('/register', methods=['POST'])
 def register():
     try:
-        # Get the data from the body of the request
-        data = request.get_json()
-
         # pull out the username and the email
         user_email = request.json.get("email", None)
         user_pass = request.json.get("password", None)
