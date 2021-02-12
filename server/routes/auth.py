@@ -6,6 +6,7 @@ from flask_jwt_extended import (
 )
 import datetime
 import bcrypt
+from bcrypt import hashpw
 import jwt
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -95,3 +96,4 @@ def register():
     # if the user forgot / did not enter and email or password
     except AttributeError:
         return jsonify({"msg" : 'Provide an Email and Password'}), 400
+
