@@ -5,6 +5,7 @@ from flask_jwt_extended import (
 )
 import datetime
 import bcrypt
+from bcrypt import hashpw
 import jwt
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -42,7 +43,8 @@ def login():
 
         # else, they were found so now compare the hashed saved password in the DB to the password the user entered
         # if the password is correct, create a auth token and then send back that user logged in fine and the token, else, return some 400 res
-        if bcrypt.checkpw(user_pass.encode('utf-8'), user.password):
+        if user.password == bcrypt.hashpw(user_pass.encode('UTF_8'),
+            user.password.encode('UTF_8')).decode():
             access_token = create_access_token(identity={'email':user_email})
             return jsonify({"msg": f'{user.name} logged in', "access_token": access_token}) 
         else:
@@ -92,4 +94,3 @@ def register():
     except AttributeError:
         return jsonify({"msg" : 'Provide an Email and Password'}), 400
 
-        
