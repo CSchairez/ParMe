@@ -91,3 +91,5 @@ def register():
     # if the user forgot / did not enter and email or password
     except AttributeError:
         return jsonify({"msg" : 'Provide an Email and Password'}), 400
+
+        
