@@ -11,6 +11,9 @@ from sqlalchemy.exc import IntegrityError
 from ..models.round import Round, RoundSchema
 from ..models.user import User, UserSchema
 
+# Our db object from SQLAlchemys
+from ..models.db_init import db
+
 rounds = Blueprint('rounds', __name__)
 
 # Feed route will show all rounds that have been posted.
@@ -20,25 +23,34 @@ def feed():
 
     round_data = Round.query.all()
     round_schema = RoundSchema(many=True)
-    output = round_schema.dump(rounds)
+    output = round_schema.dump(round_data)
     return jsonify({'round': output}),200
 
-@jwt_required
+
 @rounds.route('/addRound', methods=['POST'])
+@jwt_required
 def add_round():
     # Get the data from the body of the request
     data = request.get_json()
 
-    # pull out the username and the email
-    name = request.json.get("name", None)
+    # Filter DB by token (email)
+    user_email = get_jwt_identity().get('email')
+    
+    # Query the user to get their user_id
+    user = User.query.filter_by(email=user_email).first()
+    
+    
+    # Pull out the course name and score
     course = request.json.get("course", None)
     score = request.json.get("score", None)
     
-    # Figure out how to query the golfer
-
-    # Query the user to their associated round.
-    new_round = Round(course_name=course, score=score, user_id=1)
+    # Add round to the db
+    new_round = Round(course_name=course, score=score, user_id=user.user_id)
     db.session.add(new_round)
     db.session.commit()
 
-    return jsonify({"msg" : "round added"})
+    # Jsonify the new round
+    round_schema = RoundSchema(many=False)
+    output = round_schema.dump(new_round)
+
+    return jsonify({"msg" : output})
