@@ -10,6 +10,7 @@ from bcrypt import hashpw
 import jwt
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
+from .helpers import get_admins
 
 # User model to create new user records for our user table, and round records for round table.
 # Import the schemas to output into serializable json
@@ -45,8 +46,8 @@ def login():
         # else, they were found so now compare the hashed saved password in the DB to the password the user entered
         # if the password is correct, create a auth token and then send back that user logged in fine and the token, else, return some 400 res
 
-        if user.password == bcrypt.hashpw(user_pass.encode('UTF_8'),
-            user.password.encode('UTF_8')).decode():
+        # this is bugged
+        if bcrypt.checkpw(user_pass, user.password):
             access_token = create_access_token(identity={'email':user_email})
             return jsonify({
                 '_id': user.user_id,
@@ -54,7 +55,7 @@ def login():
                 'email': user.email,
                 'isAdmin': user.admin,
                 'token': access_token,
-        }), 200
+        })
         else:
             return jsonify({"msg" : 'Invalid credentials'}), 400
 
@@ -77,11 +78,15 @@ def register():
         if not user_pass:
             return jsonify({"msg" : 'Missing password'}), 400
 
+        # Check if this users email is an admin elligible email
+        isAdmin = get_admins(user_email)
+
         # hash the entered password with bcrypt
         pass_hash = bcrypt.hashpw(user_pass.encode('utf-8'), bcrypt.gensalt())
 
         # Use the user model to create a new instance of a user and then put them in the DB
-        user = User(user_name, user_email, pass_hash)
+        user = User(user_name, user_email, pass_hash, isAdmin)
+
 
         # Create JWT with a payload of the users email
         access_token = create_access_token(identity={'email':user_email})
