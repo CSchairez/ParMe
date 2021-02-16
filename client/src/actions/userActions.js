@@ -47,6 +47,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+// Expects the users name, email and password to register at our register endpoint
 export const register = (name, email, password) => async (dispatch) => {
   try {
     // dispatch the action first to reducers - this simply is going to be used for setting some state for a loading bar or spinner
@@ -59,7 +60,7 @@ export const register = (name, email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      '/api/auth/register',
+      'http://127.0.0.1:5000/api/auth/register',
       { name, email, password }, // the data to send in the request
       config,
     );

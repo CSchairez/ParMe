@@ -23,6 +23,8 @@ const userInfoFromLocalStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
 
+// the initial app state - can be empty or anything you want by default when app loads
+// this can be local_storage, or just empty object. Whatever we want as the team / engineer
 const initialState = {
   userLogin: { userInfo: userInfoFromLocalStorage },
 };

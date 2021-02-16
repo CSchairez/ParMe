@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Register = () => {
+// Actions imports - actions will fire off the actual network requests, etc.
+import { register } from '../../actions/userActions';
+
+const Register = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+  const dispatch = useDispatch(); // hook to allow us to dispatch into the store
+
+  // get the userLogin state (this specifically points to the userlogin reducer so we can fire actions off into this)
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  // If we are already logged in, redirect
+  useEffect(() => {
+    if (userInfo) {
+      history.push('/feed');
+    }
+  }, [history, userInfo]);
+
   const onHandleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, email, password);
-
     // dispath the register action here
+    dispatch(register(email, name, password));
   };
 
   const onHandleChange = (e) => {

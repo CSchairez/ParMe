@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_cors import CORS
 
 # Database init for global db obj + route imports for blueprints
 from server.routes.auth import auth
@@ -20,6 +21,9 @@ def create_app():
 
     # initialize flask app
     app = Flask(__name__)
+
+    # Middlewares
+    CORS(app)
 
     # Configure the DB for this app
     app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
