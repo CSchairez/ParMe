@@ -25,7 +25,6 @@ const Register = ({ history }) => {
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
-    // dispath the register action here
     dispatch(register(name, email, password));
   };
 

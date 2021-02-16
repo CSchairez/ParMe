@@ -47,13 +47,12 @@ def login():
 
         if user.password == bcrypt.hashpw(user_pass.encode('UTF_8'),
             user.password.encode('UTF_8')).decode():
-
             access_token = create_access_token(identity={'email':user_email})
             return jsonify({
                 '_id': user.user_id,
                 'name': user.name,
                 'email': user.email,
-                'isAdmin': user.isAdmin,
+                'isAdmin': user.admin,
                 'token': access_token,
         }), 200
         else:
@@ -91,12 +90,12 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        # return that the user was added fine and also the access token to be stored in Local Storage
+        # return that the user and token
         return jsonify({
             '_id': user.user_id,
             'name': user.name,
             'email': user.email,
-            'isAdmin': user.isAdmin,
+            'isAdmin': user.admin,
             'token': access_token,
         }), 200
 
