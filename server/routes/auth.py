@@ -1,7 +1,8 @@
 from flask import Flask, Blueprint, request, redirect, url_for, session, jsonify
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
-    get_jwt_identity
+    get_jwt_identity, create_refresh_token, jwt_refresh_token_required,
+    get_raw_jwt
 )
 import datetime
 import bcrypt
@@ -43,8 +44,10 @@ def login():
 
         # else, they were found so now compare the hashed saved password in the DB to the password the user entered
         # if the password is correct, create a auth token and then send back that user logged in fine and the token, else, return some 400 res
+
         if user.password == bcrypt.hashpw(user_pass.encode('UTF_8'),
             user.password.encode('UTF_8')).decode():
+
             access_token = create_access_token(identity={'email':user_email})
             return jsonify({"msg": f'{user.name} logged in', "access_token": access_token}) 
         else:
