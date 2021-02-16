@@ -43,17 +43,17 @@ const Login = ({ location, history }) => {
 
   return (
     <div className="login">
-      <main class="bg-white max-w-lg mx-auto p-8 md:p-12 my-20 rounded-lg shadow-2xl">
+      <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-20 rounded-lg shadow-2xl">
         <section>
-          <h3 class="font-bold text-2xl">Login</h3>
+          <h3 className="font-bold text-2xl">Login</h3>
         </section>
 
-        <section class="mt-10">
-          <form class="flex flex-col" onSubmit={onHandleSubmit}>
-            <div class="mb-6 pt-3 rounded">
+        <section className="mt-10">
+          <form className="flex flex-col" onSubmit={onHandleSubmit}>
+            <div className="mb-6 pt-3 rounded">
               <label
-                class="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                for="email"
+                className="block text-gray-700 text-sm font-bold mb-2 ml-3"
+                htmlFor="email"
               >
                 Email
               </label>
@@ -63,13 +63,13 @@ const Login = ({ location, history }) => {
                 name="email"
                 value={email}
                 onChange={onHandleChange}
-                class="rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
+                className="rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
               />
             </div>
-            <div class="mb-6 pt-3 rounded">
+            <div className="mb-6 pt-3 rounded">
               <label
-                class="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                for="password"
+                className="block text-gray-700 text-sm font-bold mb-2 ml-3"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -79,19 +79,19 @@ const Login = ({ location, history }) => {
                 name="password"
                 value={password}
                 onChange={onHandleChange}
-                class="rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
+                className="rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
               />
             </div>
-            <div class="flex justify-end">
+            <div className="flex justify-end">
               <Link
                 to="/update_password"
-                class="text-sm text-green-600 hover:text-green-700 hover:underline mb-6"
+                className="text-sm text-green-600 hover:text-green-700 hover:underline mb-6"
               >
                 Forgot your password?
               </Link>
             </div>
             <button
-              class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
+              className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
               type="submit"
               onSubmit={onHandleSubmit}
             >
@@ -101,10 +101,10 @@ const Login = ({ location, history }) => {
         </section>
       </main>
 
-      <div class="max-w-lg mx-auto text-center mt-12 mb-6">
-        <p class="text-green-600">
+      <div className="max-w-lg mx-auto text-center mt-12 mb-6">
+        <p className="text-green-600">
           Don't have an account?{' '}
-          <Link to="/register" class="font-bold hover:underline">
+          <Link to="/register" className="font-bold hover:underline">
             Sign up
           </Link>
           .

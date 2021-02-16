@@ -55,8 +55,7 @@ export const userRegisterReducer = (state = {}, action) => {
         error: action.payload,
       };
     case USER_LOGOUT:
-      return {}; // empty all the state for the register reducer
-
+      return {};
     default:
       return state;
   }

@@ -23,8 +23,8 @@ const userInfoFromLocalStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
 
-// the initial app state - can be empty or anything you want by default when app loads
-// this can be local_storage, or just empty object. Whatever we want as the team / engineer
+// the initial app state for userLogin reducer - if the user is logged in (local storage has the token)
+// then we can just populate this state already with information
 const initialState = {
   userLogin: { userInfo: userInfoFromLocalStorage },
 };

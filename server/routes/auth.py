@@ -26,8 +26,8 @@ auth = Blueprint('auth', __name__)
 def login():
     try:
         # pull out the username and the email
-        user_email = request.json.get("email", None)
-        user_pass = request.json.get("password", None)
+        user_email = request.json["email"]
+        user_pass = request.json["password"]
 
         # If there is no email or password return 400 
         if not user_email:
@@ -59,15 +59,15 @@ def login():
             return jsonify({"msg" : 'Invalid credentials'}), 400
 
     except AttributeError:
-        return jsonify({"msg": "Please enter an email and password"})
+        return jsonify({"msg": "Please enter an email and password"}), 400
 
 @auth.route('/register', methods=['POST'])
 def register():
     try:
         # pull out the username and the email
-        user_email = request.json.get("email", None)
-        user_pass = request.json.get("password", None)
-        user_name = request.json.get("name", None)
+        user_email = request.json["email"]
+        user_pass = request.json["password"]
+        user_name = request.json["name"]
 
         # If there is no name/email/pw return 400
         if not user_name:
