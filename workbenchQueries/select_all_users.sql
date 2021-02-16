@@ -1,1 +1,1 @@
-SELECT * FROM parme.users
+SELECT * FROM parme.user;

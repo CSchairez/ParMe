@@ -17,6 +17,7 @@ import {
 
 export const login = (email, password) => async (dispatch) => {
   try {
+    // dispatch the action first to reducers - this simply is going to be used for setting some state for a loading bar or spinner
     dispatch({
       type: USER_LOGIN_REQUEST,
     });
@@ -26,15 +27,17 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      '/api/auth/login',
+      '/api/users/login',
       { email, password }, // the data to send in the request
       config,
     );
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data,
+      payload: data, // send this data as the payload for this action
     });
+    // save the user information in local storage: contains the users id, name email, admin permission and token
+    // we will want to load this initially (if it existed) into initial state in our store.js. See the code there
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({
@@ -47,7 +50,6 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-// Expects the users name, email and password to register at our register endpoint
 export const register = (name, email, password) => async (dispatch) => {
   try {
     // dispatch the action first to reducers - this simply is going to be used for setting some state for a loading bar or spinner
@@ -75,6 +77,8 @@ export const register = (name, email, password) => async (dispatch) => {
       type: USER_LOGIN_SUCCESS,
       payload: data,
     });
+    // save the user information in local storage: contains the users id, name email, admin permission and token
+    // we will want to load this initially (if it existed) into initial state in our store.js. See the code there
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({

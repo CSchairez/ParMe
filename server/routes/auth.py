@@ -49,7 +49,13 @@ def login():
             user.password.encode('UTF_8')).decode():
 
             access_token = create_access_token(identity={'email':user_email})
-            return jsonify({"msg": f'{user.name} logged in', "access_token": access_token}) 
+            return jsonify({
+                '_id': user.user_id,
+                'name': user.name,
+                'email': user.email,
+                'isAdmin': user.isAdmin,
+                'token': access_token,
+        }), 200
         else:
             return jsonify({"msg" : 'Invalid credentials'}), 400
 
@@ -86,7 +92,13 @@ def register():
         db.session.commit()
 
         # return that the user was added fine and also the access token to be stored in Local Storage
-        return jsonify({"msg": f'{user_name} added successfully', "access_token": access_token}), 200
+        return jsonify({
+            '_id': user.user_id,
+            'name': user.name,
+            'email': user.email,
+            'isAdmin': user.isAdmin,
+            'token': access_token,
+        }), 200
 
     # if the user already exists
     except IntegrityError:
