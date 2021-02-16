@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+import { login } from '../../actions/userActions';
+
+const Login = ({ location, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+
+  // get the userLogin state (this specifically points to the userlogin reducer so we can fire actions off into this)
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+  const redirect = location.search ? location.search.split('=')[1] : '/feed';
+
+  // If we are already logged in (the user would exist in the userLogin state in our store), redirect
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, redirect, userInfo]);
+
   const onHandleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
-
     // dispath the login action here
+    dispatch(login(email, password)); // dispatch the login action to the store
   };
 
   const onHandleChange = (e) => {

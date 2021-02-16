@@ -5,23 +5,27 @@ import { Link } from 'react-router-dom';
 // Actions imports - actions will fire off the actual network requests, etc.
 import { register } from '../../actions/userActions';
 
-const Register = ({ history }) => {
+const Register = ({ location, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
   const dispatch = useDispatch(); // hook to allow us to dispatch into the store
 
-  // get the userLogin state (this specifically points to the userlogin reducer so we can fire actions off into this)
+  // get the userRegister state (this specifically points to the userRegister reducer so we can fire actions off into this)
   const userRegister = useSelector((state) => state.userRegister);
+
+  // Pull out the register state information to use in this component
   const { loading, error, userInfo } = userRegister;
+
+  const redirect = location.search ? location.search.split('=')[1] : '/feed';
 
   // If we are already logged in, redirect
   useEffect(() => {
     if (userInfo) {
-      history.push('/feed');
+      history.push(redirect);
     }
-  }, [history, userInfo]);
+  }, [history, redirect, userInfo]);
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -55,7 +59,7 @@ const Register = ({ history }) => {
             <div className="mb-6 pt-3 rounded">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                for="Name"
+                htmlFor="Name"
               >
                 Name
               </label>
@@ -71,7 +75,7 @@ const Register = ({ history }) => {
             <div className="mb-6 pt-3 rounded">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                for="email"
+                htmlFor="email"
               >
                 Email
               </label>
@@ -87,7 +91,7 @@ const Register = ({ history }) => {
             <div className="mb-6 pt-3 rounded">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                for="password"
+                htmlFor="password"
               >
                 Password
               </label>

@@ -32,7 +32,7 @@ export const userLoginReducer = (state = {}, action) => {
         error: action.payload,
       };
     case USER_LOGOUT:
-      return {};
+      return {}; // empty all the state for the login reducer
     default:
       return state;
   }
@@ -54,6 +54,9 @@ export const userRegisterReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case USER_LOGOUT:
+      return {}; // empty all the state for the register reducer
+
     default:
       return state;
   }

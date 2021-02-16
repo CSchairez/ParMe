@@ -27,7 +27,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      '/api/users/login',
+      'http://127.0.0.1:5000/api/auth/login',
       { email, password }, // the data to send in the request
       config,
     );
@@ -172,7 +172,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem('userInfo');
+  localStorage.removeItem('userInfo'); // remove user info from the local storage
   dispatch({
     type: USER_LOGOUT,
   });
