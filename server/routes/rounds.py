@@ -10,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from ..models.round import Round, RoundSchema
 from ..models.user import User, UserSchema
+from ..models.comments import Comments, CommentsSchema
 
 # Our db object from SQLAlchemys
 from ..models.db_init import db
@@ -54,3 +55,27 @@ def add_round():
     output = round_schema.dump(new_round)
 
     return jsonify({"msg" : output})
+
+@rounds.route('/commentRound', methods=['POST'])
+@jwt_required
+def comment_round():
+    # Get the data from the body of the request
+    data = request.get_json()
+
+    # Filter DB by token (email)
+    user_email = get_jwt_identity().get('email')
+    
+    # Query the user to get their user_id
+    user = User.query.filter_by(email=user_email).first()
+
+    # Get the content of the comment
+    user_content = request.json.get("content", None)
+    poster_id = request.json.get("post_id", None)
+
+    # Get the round_id they want to comment on
+    new_comment = Comments(content=user_content, user_id=user.user_id)
+
+    
+
+
+

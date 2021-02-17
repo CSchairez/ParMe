@@ -14,7 +14,8 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     rounds = db.relationship("Round")
-
+    
+    
     def __init__(self, name, email, password, admin=False):
         self.name = name
         self.email = email
