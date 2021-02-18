@@ -16,6 +16,7 @@ class User(db.Model):
     rounds = db.relationship("Round")
     
     
+    
     def __init__(self, name, email, password, admin=False):
         self.name = name
         self.email = email
