@@ -37,7 +37,8 @@ export const login = (email, password) => async (dispatch) => {
       payload: data, // send this data as the payload for this action
     });
     // save the user information in local storage: contains the users id, name email, admin permission and token
-    // we will want to load this initially (if it existed) into initial state in our store.js. See the code there
+    // we will want to load this initially (if it existed) into initial state in our store.js so that if we reload the page or close browser, it will still have us signed in.
+    // and the UI will be in sync
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({
@@ -92,7 +93,7 @@ export const register = (name, email, password) => async (dispatch) => {
 };
 
 // get state allows us to get the state for the user info which contains the token when logged in!
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = () => async (dispatch, getState) => {
   try {
     // dispatch the action first to reducers - this simply is going to be used for setting some state for a loading bar or spinner
     dispatch({
@@ -112,7 +113,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     };
 
     // Get the users info for the user signed in (id will be in state)
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`/api/users/user`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -138,7 +139,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 
     // pull out the token from the state asscociated with this reducer (which is userLogin which then contains userInfo nested)
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }, // userInfo is nested in the userLogin reducer of our state
     } = getState();
 
     const config = {
@@ -147,7 +148,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put('/api/users/profile', user, config);
+    const { data } = await axios.put('/api/users/user/update', user, config);
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,

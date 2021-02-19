@@ -14,7 +14,7 @@ import {
 const rootReducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
-  userDetails: userDetailsReducer,
+  userDetails: userDetailsReducer, // will hold all the details about a user
   userUpdateProfile: userUpdateProfileReducer,
 });
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Bullet from '../Bullet';
 import Track from '../icons/Track';
 import Visit from '../icons/Visit';
 import Insights from '../icons/Insights';

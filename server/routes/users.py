@@ -28,7 +28,7 @@ def all_users():
         users_data = User.query.all()
         users_schema = UserSchema(many=True)
         output = users_schema.dump(users_data)
-        return jsonify({'users': output}), 200
+        return jsonify(output), 200
 
     except:
         return jsonify({"msg": "No users could be found"}), 400
@@ -47,7 +47,8 @@ def get_user():
         users_data = User.query.filter_by(email = user_email).first()
         users_schema = UserSchema(many=False)
         output = users_schema.dump(users_data)
-        return jsonify({'users': output}), 200
+        del output['password'] # do NOT want to send back a password
+        return jsonify(output), 200
 
     except:
         return jsonify({"msg": "User could not be found"}), 400
