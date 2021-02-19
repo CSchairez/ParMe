@@ -8,6 +8,7 @@ import About from './components/screens/About';
 import Feed from './components/screens/Feed';
 import Login from './components/screens/Login';
 import Register from './components/screens/Register';
+import Profile from './components/screens/Profile';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/about" component={About} />
+            <Route path="/profile" component={Profile} />
             <Route path="/feed" component={Feed} />
           </Switch>
         </div>

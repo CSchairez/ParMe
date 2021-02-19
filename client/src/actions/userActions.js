@@ -102,7 +102,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     // pull out the token from the state asscociated with this reducer (which is userLogin which then contains userInfo nested)
     const {
       userLogin: { userInfo },
-    } = getState();
+    } = getState(); // get the current state in our redux store so we can pull out the usersIfnor which contains the ID needed to send the auth request to server to get private info
 
     const config = {
       headers: {
@@ -110,6 +110,8 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+
+    // Get the users info for the user signed in (id will be in state)
     const { data } = await axios.get(`/api/users/${id}`, config);
 
     dispatch({
