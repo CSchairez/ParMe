@@ -100,6 +100,7 @@ def update():
             # find the user so we can change their password
             user = User.query.filter_by(email=user_email).first()
             user.password = pass_hash
+            user.email = user_email
             db.session.commit()
 
             return jsonify({"msg":"Password changed!"})
