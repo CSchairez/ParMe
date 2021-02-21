@@ -79,6 +79,35 @@ def login():
     except AttributeError:
         return jsonify({"msg": "Please enter an email and password"}), 400
 
+
+@auth.route('/updateProfile', methods=['POST'])
+@jwt_required
+def update():
+    try:
+        data = request.get_json()
+
+        user_email = request.json["email"]
+        user_pass = request.json["password"]
+        confirm_pass = request.json["confirm_password"]
+
+        if user_pass != confirm_pass:
+            return jsonify({"msg":"Passwords do not match!"})
+
+        else:
+            # hash the entered password with bcrypt
+            pass_hash = bcrypt.hashpw(confirm_pass.encode('utf-8'), bcrypt.gensalt())
+            
+            # find the user so we can change their password
+            user = User.query.filter_by(email=user_email).first()
+            user.password = pass_hash
+            db.session.commit()
+
+            return jsonify({"msg":"Password changed!"})
+
+    except AttributeError:
+        return jsonify({"msg":"An error occurred."})
+    
+
 @auth.route('/register', methods=['POST'])
 def register():
     try:
