@@ -5,6 +5,7 @@ from flask_cors import CORS
 # Database init for global db obj + route imports for blueprints
 from server.routes.auth import auth
 from server.routes.rounds import rounds
+from server.routes.users import users
 from server.models.db_init import db
 from server.models.ma_init import ma
 from flask_sqlalchemy import SQLAlchemy
@@ -46,6 +47,7 @@ def create_app():
     # register all routing blueprints
     app.register_blueprint(auth, url_prefix="/api/auth")
     app.register_blueprint(rounds, url_prefix="/api/rounds")
+    app.register_blueprint(users, url_prefix="/api/users")
 
     return app 
 
