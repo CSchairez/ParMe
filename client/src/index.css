@@ -5,3 +5,54 @@
 /* * {
   background-color: gray;
 } */
+.add_round {
+  background-color: #059669;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* Keep the button always here */
+  bottom: 3rem;
+  right: 3rem;
+}
+
+.add_round_2 {
+  background-color: #059669;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* Keep the button always here */
+  bottom: 7rem;
+  right: 3rem;
+}
+
+.add_round .adder {
+  color: #fff;
+  font-size: 2rem;
+}
+
+.add_round_2 .adder_2 {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.add_round:hover {
+  cursor: pointer;
+}
+
+.add_round_2:hover {
+  cursor: pointer;
+}
+
+.round {
+  max-width: 85%;
+  min-height: 30rem;
+  background-color: gray;
+}
